@@ -12,7 +12,7 @@
  * <http://www.OpenLDAP.org/license.html>. */
 
 #define MDBX_ALLOY 1
-#define MDBX_BUILD_SOURCERY b15f37aaf0bd0dc4ebfbe0d44b862ae719644acca9f672cc6209c2e7bb42a3a9_v0_8_2_7_g3d31884c3
+#define MDBX_BUILD_SOURCERY 5ee8477103308c08abef184c7755991b292f96d06376630e58bac0437d08cc32_v0_8_2_12_g2cd7fcb16
 #ifdef MDBX_CONFIG_H
 #include MDBX_CONFIG_H
 #endif
@@ -21811,7 +21811,7 @@ __dll_export
     __has_attribute(__externally_visible__)
     __attribute__((__externally_visible__))
 #endif
-    const mdbx_build_info mdbx_build = {
+    const struct MDBX_build_info mdbx_build = {
 #ifdef MDBX_BUILD_TIMESTAMP
     MDBX_BUILD_TIMESTAMP
 #else
@@ -23974,7 +23974,9 @@ __cold MDBX_INTERNAL_FUNC bin128_t mdbx_osal_bootid(void) {
           (fstatfs(fd, &fs) == 0 && fs.f_type == /* procfs */ 0x9FA0)
               ? read(fd, buf, sizeof(buf))
               : -1;
-      close(fd);
+      const int err = close(fd);
+      assert(err == 0);
+      (void)err;
       if (len > 0 && bootid_parse_uuid(&bin, buf, len))
         return bin;
     }
@@ -24281,13 +24283,13 @@ __dll_export
     __has_attribute(__externally_visible__)
     __attribute__((__externally_visible__))
 #endif
-    const mdbx_version_info mdbx_version = {
+    const struct MDBX_version_info mdbx_version = {
         0,
         8,
         2,
-        7,
-        {"2020-07-23T11:47:05+03:00", "f06880d2034194b8dacad1b6a6c7f04d68988b87", "3d31884c3b8a7b3cafb046a2a09a06d13d37955b",
-         "v0.8.2-7-g3d31884c3"},
+        12,
+        {"2020-07-24T17:43:35+03:00", "0dba40b865385e9cc2f19276efda70b09ac07ab8", "2cd7fcb16de5f2d61330ea3683dda54248d3d245",
+         "v0.8.2-12-g2cd7fcb16"},
         sourcery};
 
 __dll_export
